@@ -4,9 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-
 var app = express();
 
 // view engine setup
@@ -19,10 +16,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.get("/users/hallo", function (req,) {
-    
+app.get("/wine/search", function (req, res) {
+    let query = req.query;
+    //db abfrage mit query;
+    let tableResponse = {
+        "tableHeader": ["colName1", "colName2", "colNameX"],
+        "tableBody": [["colData11", "colData12", "colData1X"],["colData21", "colData22", "colData2X" ],["colDataX1", "colDataX2", "colDataXX" ]]
+    };
+    res.send(tableResponse);
 })
 
 // catch 404 and forward to error handler
