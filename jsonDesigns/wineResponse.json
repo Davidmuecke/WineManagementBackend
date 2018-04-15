@@ -1,15 +1,11 @@
-//Wine, Supplier, ... in json Format
-
-
-//Wine
 {
   "name": "name",
-  "street": "street",
   "region": "region",
-  "year": "Date" /*in date format*/,
+  "year": 1990 /*year as Integer*/,
   "amount": 123 /*amount as Integer*/,
   "deliveryDate": "Date" /*in date format*/,
   "basePrice": 123.456 /*price as double*/,
   "sellPrice": 123.456 /*price as double*/,
   "supplierID": "supplierID"
 }
+
