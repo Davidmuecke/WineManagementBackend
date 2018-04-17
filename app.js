@@ -17,7 +17,7 @@ app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -30,7 +30,7 @@ app.get("/wine/search", function (req, res) {
     console.log(query);
     let tableResponse = {
         "tableHeader": ["id0", "colName1", "colName2", "colNameX"],
-        "tableBody": [["id10", "colData11", "colData12", "colData1X"],["id20", "colData21", "colData22", "colData2X" ],["idX0", "colDataX1", "colDataX2", "colDataXX" ]]
+        "tableBody": [["id10", "colData11", "colData12", "colData1X"], ["id20", "colData21", "colData22", "colData2X"], ["idX0", "colDataX1", "colDataX2", "colDataXX"]]
     };
     res.send(tableResponse);
 });
@@ -56,8 +56,20 @@ app.post("/wine/delete", async function (req, res) {
 });
 
 app.get("/wine/get", async function (req, res) {
-    let result = await databaseutils.getWines();
-    console.log(result);
+    let wineResult = await databaseutils.getWines();
+    console.log(wineResult);
+    let result = {
+        "tableHeader": ["Nummer", "Name", "Jahrgang", "Bestand", "Lieferant", "Einkaufspreis", "Verkaufspreis", "Anbauort", "Lagerort"],
+        "tableBody": []
+    };
+    let tableBody = [];
+    for (let w in wineResult) {
+        let supplier = await databaseutils.getSupplierById(wineResult[w].lieferant_id);
+        console.log(supplier);
+        tableBody.push([wineResult[w].nummer, wineResult[w].name, wineResult[w].jahrgang, wineResult[w].bestand, supplier.firstName + " " + supplier.name,
+                        wineResult[w].einkaufspreis, wineResult[w].verkaufspreis, wineResult[w].anbauort, wineResult[w].lagerort]);
+    }
+    result.tableBody = tableBody;
     res.send(result);
 });
 
@@ -129,19 +141,19 @@ app.get("/address/getById", async function (req, res) {
 
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+app.use(function (req, res, next) {
+    next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use(function (err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
 
 module.exports = app;

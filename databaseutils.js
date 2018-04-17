@@ -51,15 +51,16 @@ const getWines = () =>
             let jsonResultArray = [];
             for (let i = 0; i < result.length; i++) {
                 let jsonResult = {
+                    "nummer": result[i].id,
                     "name": result[i].bezeichnung,
-                    "region": result[i].herkunft,
-                    "location": result[i].lagerort,
-                    "year": result[i].jahrgang,
-                    "deliveryDate": result[i].lieferdatum,
-                    "amount": result[i].menge,
-                    "basePrice": result[i].einkaufspreis,
-                    "sellPrice": result[i].verkaufspreis,
-                    "supplierID": result[i].lieferant_id
+                    "jahrgang": result[i].jahrgang,
+                    "bestand": result[i].menge,
+                    "lieferant_id": result[i].lieferant_id,
+                    "einkaufspreis": result[i].einkaufspreis,
+                    "verkaufspreis": result[i].verkaufspreis,
+                    "anbauort": result[i].herkunft,
+                    "lagerort": result[i].lagerort,
+                    "lieferdatum": result[i].lieferdatum
                 };
                 jsonResultArray.push(jsonResult);
             }
@@ -75,6 +76,7 @@ const getWineById = (id) =>
             if (err) throw err;
             console.log("Wine successfully returned");
             let jsonResult = {
+                "nummer": result.id,
                 "name": result.bezeichnung,
                 "region": result.herkunft,
                 "location": result.lagerort,
@@ -86,6 +88,31 @@ const getWineById = (id) =>
                 "supplierID": result.lieferant_id
             }
             resolve(jsonResult);
+        });
+    });
+
+const searchWine = (query) =>
+    new Promise((resolve, reject) => {
+        console.log("Connected!");
+        let sql = "SELECT * FROM artikel WHERE jahrgang = '" + query + "' OR menge = '" + query + "' OR bezeichnung = '" + query + "' lagerort = '" + query + "' OR herkunft = '" + query + "'";
+        db.query(sql, function (err, result) {
+            if (err) throw err;
+            let jsonResultArray = [];
+            for (let i = 0; i < result.length; i++) {
+                let jsonResult = {
+                    "name": result[i].bezeichnung,
+                    "region": result[i].herkunft,
+                    "location": result[i].lagerort,
+                    "year": result[i].jahrgang,
+                    "deliveryDate": result[i].lieferdatum,
+                    "amount": result[i].menge,
+                    "basePrice": result[i].einkaufspreis,
+                    "sellPrice": result[i].verkaufspreis,
+                    "supplierID": result[i].lieferant_id
+                };
+                jsonResultArray.push(jsonResult);
+            }
+            resolve(result);
         });
     });
 
@@ -126,7 +153,7 @@ const deleteSupplier = (id) =>
 const getSuppliers = () =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
-        let sql = "SELECT * FROM artikel";
+        let sql = "SELECT * FROM lieferant";
         db.query(sql, function (err, result) {
             if (err) throw err;
             console.log("Supplier successfully printed");
@@ -150,14 +177,34 @@ const getSupplierById = (id) =>
         let sql = "SELECT * FROM lieferant WHERE id = " + id;
         db.query(sql, function (err, result) {
             if (err) throw err;
-            console.log("Wine successfully returned");
+            console.log("Supplier successfully returned");
             let jsonResult = {
-                "name": result.name,
-                "firstName": result.vorname,
-                "region": result.region,
-                "address_id": result.adresse_id,
-            }
+                "name": result[0].name,
+                "firstName": result[0].vorname,
+                "region": result[0].region,
+                "address_id": result[0].adresse_id,
+            };
             resolve(jsonResult);
+        });
+    });
+
+const searchSupplier = (query) =>
+    new Promise((resolve, reject) => {
+        console.log("Connected!");
+        let sql = "SELECT * FROM lieferant WHERE name = '" + query + "' OR vorname = '" + query + "' OR region = '" + query + "'";
+        db.query(sql, function (err, result) {
+            if (err) throw err;
+            let jsonResultArray = [];
+            for (let i = 0; i < result.length; i++) {
+                let jsonResult = {
+                    "name": result[i].name,
+                    "firstName": result[i].vorname,
+                    "region": result[i].region,
+                    "address_id": result[i].adresse_id,
+                };
+                jsonResultArray.push(jsonResult);
+            }
+            resolve(result);
         });
     });
 
