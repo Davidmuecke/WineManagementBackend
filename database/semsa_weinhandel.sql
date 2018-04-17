@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 12. Apr 2018 um 15:17
+-- Erstellungszeit: 16. Apr 2018 um 10:37
 -- Server-Version: 10.1.22-MariaDB
 -- PHP-Version: 7.1.4
 
@@ -62,17 +62,18 @@ CREATE TABLE `artikel` (
   `herkunft` varchar(100) COLLATE utf8_bin NOT NULL,
   `einkaufspreis` int(10) NOT NULL,
   `verkaufspreis` int(10) NOT NULL,
-  `lieferant_id` int(10) NOT NULL
+  `lieferant_id` int(10) NOT NULL,
+  `lieferdatum` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `artikel`
 --
 
-INSERT INTO `artikel` (`id`, `jahrgang`, `menge`, `bezeichnung`, `lagerort`, `herkunft`, `einkaufspreis`, `verkaufspreis`, `lieferant_id`) VALUES
-(1, 1969, 200, 'Rotwein', 'Vaihingen', 'Stuttgart', 5, 9, 1),
-(2, 1900, 15, 'Portwein', 'Freiburg', 'Porto', 10, 15, 2),
-(3, 1800, 5, 'Weisswein', 'Bruchsal', 'Vancouver', 1000, 10000, 2);
+INSERT INTO `artikel` (`id`, `jahrgang`, `menge`, `bezeichnung`, `lagerort`, `herkunft`, `einkaufspreis`, `verkaufspreis`, `lieferant_id`, `lieferdatum`) VALUES
+(1, 1969, 200, 'Rotwein', 'Vaihingen', 'Stuttgart', 5, 9, 1, '2018-001-01'),
+(2, 1900, 15, 'Portwein', 'Freiburg', 'Porto', 10, 15, 2, '2019-02-03'),
+(3, 1800, 5, 'Weisswein', 'Bruchsal', 'Vancouver', 1000, 10000, 2, '2017-07-04');
 
 -- --------------------------------------------------------
 
@@ -326,7 +327,7 @@ ALTER TABLE `adresse`
 -- AUTO_INCREMENT für Tabelle `artikel`
 --
 ALTER TABLE `artikel`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT für Tabelle `artikel_bestellung`
 --
