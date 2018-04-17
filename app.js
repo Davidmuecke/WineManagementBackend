@@ -38,13 +38,13 @@ app.get("/wine/search", function (req, res) {
 app.post("/wine/add", async function (req, res) {
     console.log("Posting");
     console.log(req.body.name);
-    let result = await databaseutils.addWine(req.body.name, req.body.region, req.body.location, req.body.year, req.body.amount, req.body.basePrice, req.body.sellPrice, req.body.supplierID);
+    let result = await databaseutils.addWine(req.body.name, req.body.region, req.body.location, req.body.year, req.body.deliveryDate, req.body.amount, req.body.basePrice, req.body.sellPrice, req.body.supplierID);
     console.log(result);
     res.send(result);
 });
 
 app.post("/wine/update", async function (req, res) {
-    let result = await databaseutils.updateWine(req.body.id, req.body.name, req.body.region, req.body.location, req.body.year, req.body.amount, req.body.basePrice, req.body.sellPrice, req.body.supplierID);
+    let result = await databaseutils.updateWine(req.body.id, req.body.name, req.body.region, req.body.location, req.body.year, req.body.deliveryDate, req.body.amount, req.body.basePrice, req.body.sellPrice, req.body.supplierID);
     console.log(result);
     res.send(result);
 });
