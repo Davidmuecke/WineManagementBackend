@@ -26,11 +26,11 @@ app.get("/", function (req, res) {
 });
 
 app.get("/wine/search", function (req, res) {
-    let query = req.query;
+    let query = req.body.query;
     console.log(query);
     let tableResponse = {
-        "tableHeader": ["colName1", "colName2", "colNameX"],
-        "tableBody": [["colData11", "colData12", "colData1X"],["colData21", "colData22", "colData2X" ],["colDataX1", "colDataX2", "colDataXX" ]]
+        "tableHeader": ["id0", "colName1", "colName2", "colNameX"],
+        "tableBody": [["id10", "colData11", "colData12", "colData1X"],["id20", "colData21", "colData22", "colData2X" ],["idX0", "colDataX1", "colDataX2", "colDataXX" ]]
     };
     res.send(tableResponse);
 });
