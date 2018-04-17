@@ -1,6 +1,5 @@
 {
-  "street": "street",
-  "number": 1 /*number as Integer*/,
+  "street": "street 1",
   "post": "70569",
   "city": "city",
   "country": "country"

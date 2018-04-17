@@ -98,13 +98,13 @@ app.get("/supplier/getById", async function (req, res) {
 });
 
 app.post("/address/add", async function (req, res) {
-    let result = await databaseutils.addAddress(req.body.street, req.body.number, req.body.post, req.body.city, req.body.country);
+    let result = await databaseutils.addAddress(req.body.street, req.body.post, req.body.city, req.body.country);
     console.log(result);
     res.send(result);
 });
 
 app.post("/address/update", async function (req, res) {
-    let result = await databaseutils.updateAddress(req.body.id, req.body.street, req.body.number, req.body.post, req.body.city, req.body.country);
+    let result = await databaseutils.updateAddress(req.body.id, req.body.street, req.body.post, req.body.city, req.body.country);
     console.log(result);
     res.send(result);
 });

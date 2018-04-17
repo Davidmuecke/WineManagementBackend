@@ -161,11 +161,11 @@ const getSupplierById = (id) =>
         });
     });
 
-const addAddress = (street, number, post, city, country) =>
+const addAddress = (street, post, city, country) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
-        let sql = "INSERT INTO adresse (land, strasse, plz, ort, hausnummer) " +
-            "VALUES ('" + country + "','" + street + "','" + post + "','" + city + "','" + number + "')";
+        let sql = "INSERT INTO adresse (land, strasse, plz, ort) " +
+            "VALUES ('" + country + "','" + street + "','" + post + "','" + city + "')";
         db.query(sql, function (err, result) {
             if (err) throw err;
             console.log("Address successfully added");
@@ -173,10 +173,10 @@ const addAddress = (street, number, post, city, country) =>
         });
     });
 
-const updateAddress = (id, street, number, post, city, country) =>
+const updateAddress = (id, street, post, city, country) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
-        let sql = "UPDATE adresse SET strasse = '" + street + "', hausnummer = '" + number + "', plz = '" + post + "', " +
+        let sql = "UPDATE adresse SET strasse = '" + street + "', plz = '" + post + "', " +
             "ort = '" + city + "', land = '" + country + "' WHERE id = " + id;
         db.query(sql, function (err, result) {
             if (err) throw err;
@@ -207,7 +207,6 @@ const getAddresses = () =>
             for (let i = 0; i < result.length; i++) {
                 let jsonResult = {
                     "street": result[i].strasse,
-                    "number": result[i].hausnummer,
                     "post": result[i].plz,
                     "city": result[i].ort,
                     "country": result[i].land
@@ -227,7 +226,6 @@ const getAddressById = (id) =>
             console.log("Wine successfully returned");
             let jsonResult = {
                 "street": result.strasse,
-                "number": result.hausnummer,
                 "post": result.plz,
                 "city": result.ort,
                 "country": result.land
