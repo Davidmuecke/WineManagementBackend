@@ -2,8 +2,8 @@
   "name": "name",
   "region": "region",
   "year": 1990 /*year as Integer*/,
+  "deliveryDate": "2018-12-24" /*in date format*/,
   "amount": 123 /*amount as Integer*/,
-  "deliveryDate": "Date" /*in date format*/,
   "basePrice": 123.456 /*price as double*/,
   "sellPrice": 123.456 /*price as double*/,
   "supplierID": "supplierID"

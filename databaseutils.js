@@ -8,21 +8,21 @@ var db = mysql.createConnection({
 });
 
 
-const addWine = (name, region, location, year, amount, basePrice, sellPrice, supplierID) =>
+const addWine = (name, region, location, year, deliveryDate, amount, basePrice, sellPrice, supplierID) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
-        let sql = "INSERT INTO artikel (bezeichnung, herkunft, lagerort, jahrgang, menge, einkaufspreis, verkaufspreis, lieferant_id) " +
-            "VALUES ('" + name + "','" + region + "','" + location + "','" + year + "','" + amount + "','" + basePrice + "','" + sellPrice + "','" + supplierID + "')";
+        let sql = "INSERT INTO artikel (bezeichnung, herkunft, lagerort, jahrgang, lieferdatum, menge, einkaufspreis, verkaufspreis, lieferant_id) " +
+            "VALUES ('" + name + "','" + region + "','" + location + "','" + year + "','" + deliveryDate + "','" + amount + "','" + basePrice + "','" + sellPrice + "','" + supplierID + "')";
         db.query(sql, function (err, result) {
             if (err) throw err;
             console.log("Wine successfully added");
         });
     });
 
-const updateWine = (id, name, region, location, year, amount, basePrice, sellPrice, supplierID) =>
+const updateWine = (id, name, region, location, year, deliveryDate, amount, basePrice, sellPrice, supplierID) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
-        let sql = "UPDATE artikel SET bezeichnung = '" + name + "', herkunft = '" + region + "', lagerort = '" + location + "', jahrgang = '" + year + "', menge = '" + amount + "', einkaufspreis = '" + basePrice + "', " +
+        let sql = "UPDATE artikel SET bezeichnung = '" + name + "', herkunft = '" + region + "', lagerort = '" + location + "', jahrgang = '" + year + "', lieferdatum = '" + deliveryDate + "', menge = '" + amount + "', einkaufspreis = '" + basePrice + "', " +
             "verkaufspreis = '" + sellPrice + "', lieferant_id = '" + supplierID + "' WHERE id = " + id;
         db.query(sql, function (err, result) {
             if (err) throw err;
@@ -55,8 +55,8 @@ const getWines = () =>
                     "region": result[i].herkunft,
                     "location": result[i].lagerort,
                     "year": result[i].jahrgang,
+                    "deliveryDate": result[i].lieferdatum,
                     "amount": result[i].menge,
-                    "deliveryDate": "some date",
                     "basePrice": result[i].einkaufspreis,
                     "sellPrice": result[i].verkaufspreis,
                     "supplierID": result[i].lieferant_id
@@ -79,8 +79,8 @@ const getWineById = (id) =>
                 "region": result.herkunft,
                 "location": result.lagerort,
                 "year": result.jahrgang,
+                "deliveryDate": result.lieferdatum,
                 "amount": result.menge,
-                "deliveryDate": "some date",
                 "basePrice": result.einkaufspreis,
                 "sellPrice": result.verkaufspreis,
                 "supplierID": result.lieferant_id
@@ -161,11 +161,11 @@ const getSupplierById = (id) =>
         });
     });
 
-const addAddress = (street, number, post, city, country) =>
+const addAddress = (street, post, city, country) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
-        let sql = "INSERT INTO adresse (land, strasse, plz, ort, hausnummer) " +
-            "VALUES ('" + country + "','" + street + "','" + post + "','" + city + "','" + number + "')";
+        let sql = "INSERT INTO adresse (land, strasse, plz, ort) " +
+            "VALUES ('" + country + "','" + street + "','" + post + "','" + city + "')";
         db.query(sql, function (err, result) {
             if (err) throw err;
             console.log("Address successfully added");
@@ -173,10 +173,10 @@ const addAddress = (street, number, post, city, country) =>
         });
     });
 
-const updateAddress = (id, street, number, post, city, country) =>
+const updateAddress = (id, street, post, city, country) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
-        let sql = "UPDATE adresse SET strasse = '" + street + "', hausnummer = '" + number + "', plz = '" + post + "', " +
+        let sql = "UPDATE adresse SET strasse = '" + street + "', plz = '" + post + "', " +
             "ort = '" + city + "', land = '" + country + "' WHERE id = " + id;
         db.query(sql, function (err, result) {
             if (err) throw err;
@@ -207,7 +207,6 @@ const getAddresses = () =>
             for (let i = 0; i < result.length; i++) {
                 let jsonResult = {
                     "street": result[i].strasse,
-                    "number": result[i].hausnummer,
                     "post": result[i].plz,
                     "city": result[i].ort,
                     "country": result[i].land
@@ -227,7 +226,6 @@ const getAddressById = (id) =>
             console.log("Wine successfully returned");
             let jsonResult = {
                 "street": result.strasse,
-                "number": result.hausnummer,
                 "post": result.plz,
                 "city": result.ort,
                 "country": result.land

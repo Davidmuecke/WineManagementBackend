@@ -26,11 +26,11 @@ app.get("/", function (req, res) {
 });
 
 app.get("/wine/search", function (req, res) {
-    let query = req.query;
+    let query = req.body.query;
     console.log(query);
     let tableResponse = {
-        "tableHeader": ["colName1", "colName2", "colNameX"],
-        "tableBody": [["colData11", "colData12", "colData1X"],["colData21", "colData22", "colData2X" ],["colDataX1", "colDataX2", "colDataXX" ]]
+        "tableHeader": ["id0", "colName1", "colName2", "colNameX"],
+        "tableBody": [["id10", "colData11", "colData12", "colData1X"],["id20", "colData21", "colData22", "colData2X" ],["idX0", "colDataX1", "colDataX2", "colDataXX" ]]
     };
     res.send(tableResponse);
 });
@@ -38,13 +38,13 @@ app.get("/wine/search", function (req, res) {
 app.post("/wine/add", async function (req, res) {
     console.log("Posting");
     console.log(req.body.name);
-    let result = await databaseutils.addWine(req.body.name, req.body.region, req.body.location, req.body.year, req.body.amount, req.body.basePrice, req.body.sellPrice, req.body.supplierID);
+    let result = await databaseutils.addWine(req.body.name, req.body.region, req.body.location, req.body.year, req.body.deliveryDate, req.body.amount, req.body.basePrice, req.body.sellPrice, req.body.supplierID);
     console.log(result);
     res.send(result);
 });
 
 app.post("/wine/update", async function (req, res) {
-    let result = await databaseutils.updateWine(req.body.id, req.body.name, req.body.region, req.body.location, req.body.year, req.body.amount, req.body.basePrice, req.body.sellPrice, req.body.supplierID);
+    let result = await databaseutils.updateWine(req.body.id, req.body.name, req.body.region, req.body.location, req.body.year, req.body.deliveryDate, req.body.amount, req.body.basePrice, req.body.sellPrice, req.body.supplierID);
     console.log(result);
     res.send(result);
 });
@@ -98,13 +98,13 @@ app.get("/supplier/getById", async function (req, res) {
 });
 
 app.post("/address/add", async function (req, res) {
-    let result = await databaseutils.addAddress(req.body.street, req.body.number, req.body.post, req.body.city, req.body.country);
+    let result = await databaseutils.addAddress(req.body.street, req.body.post, req.body.city, req.body.country);
     console.log(result);
     res.send(result);
 });
 
 app.post("/address/update", async function (req, res) {
-    let result = await databaseutils.updateAddress(req.body.id, req.body.street, req.body.number, req.body.post, req.body.city, req.body.country);
+    let result = await databaseutils.updateAddress(req.body.id, req.body.street, req.body.post, req.body.city, req.body.country);
     console.log(result);
     res.send(result);
 });
