@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 16. Apr 2018 um 10:37
+-- Erstellungszeit: 17. Apr 2018 um 13:00
 -- Server-Version: 10.1.22-MariaDB
 -- PHP-Version: 7.1.4
 
@@ -19,8 +19,15 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
+-- Falls vorhanden, bestehende Datenbank löschen.
+--
+DROP DATABASE IF EXISTS `semsa_weinhandel`;
+
+--
 -- Datenbank: `semsa_weinhandel`
 --
+CREATE DATABASE IF NOT EXISTS `semsa_weinhandel` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+USE `semsa_weinhandel`;
 
 -- --------------------------------------------------------
 
@@ -33,19 +40,18 @@ CREATE TABLE `adresse` (
   `land` varchar(100) COLLATE utf8_bin NOT NULL,
   `strasse` varchar(200) COLLATE utf8_bin NOT NULL,
   `plz` int(10) NOT NULL,
-  `ort` varchar(200) COLLATE utf8_bin NOT NULL,
-  `hausnummer` int(10) NOT NULL
+  `ort` varchar(200) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Daten für Tabelle `adresse`
 --
 
-INSERT INTO `adresse` (`id`, `land`, `strasse`, `plz`, `ort`, `hausnummer`) VALUES
-(1, 'Deutschland', 'Weinweg', 72141, 'Vaihingen', 2),
-(2, 'Deutschland', 'Weingasse', 72213, 'Leonberg', 17),
-(3, 'Deutschland', 'Weinpfad', 72362, 'Freiburg', 1),
-(4, 'Deutschland', 'Weinplatz', 73615, 'Wankheim', 3);
+INSERT INTO `adresse` (`id`, `land`, `strasse`, `plz`, `ort`) VALUES
+(1, 'Deutschland', 'Weinweg 4', 72141, 'Vaihingen'),
+(2, 'Deutschland', 'Weingasse 18', 72213, 'Leonberg'),
+(3, 'Deutschland', 'Weinpfad 1', 72362, 'Freiburg'),
+(4, 'Deutschland', 'Weinplatz 8', 73615, 'Wankheim');
 
 -- --------------------------------------------------------
 
@@ -71,9 +77,9 @@ CREATE TABLE `artikel` (
 --
 
 INSERT INTO `artikel` (`id`, `jahrgang`, `menge`, `bezeichnung`, `lagerort`, `herkunft`, `einkaufspreis`, `verkaufspreis`, `lieferant_id`, `lieferdatum`) VALUES
-(1, 1969, 200, 'Rotwein', 'Vaihingen', 'Stuttgart', 5, 9, 1, '2018-001-01'),
-(2, 1900, 15, 'Portwein', 'Freiburg', 'Porto', 10, 15, 2, '2019-02-03'),
-(3, 1800, 5, 'Weisswein', 'Bruchsal', 'Vancouver', 1000, 10000, 2, '2017-07-04');
+(1, 1969, 200, 'Rotwein', 'Vaihingen', 'Stuttgart', 5, 9, 1, '0000-00-00'),
+(2, 1900, 15, 'Portwein', 'Freiburg', 'Porto', 10, 15, 2, '0000-00-00'),
+(3, 1800, 5, 'Weisswein', 'Bruchsal', 'Vancouver', 1000, 10000, 2, '0000-00-00');
 
 -- --------------------------------------------------------
 
