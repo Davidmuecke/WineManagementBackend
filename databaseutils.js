@@ -134,7 +134,7 @@ const addSupplier = (name, vorname, region, addresse_id) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
         let sql = "INSERT INTO lieferant (name, vorname, region, adresse_id) " +
-            "VALUES ('" + name + "','" + vorname + "','" + region + "','" + address_id + "')";
+            "VALUES ('" + name + "','" + vorname + "','" + region + "','" + addresse_id + "')";
         db.query(sql, function (err, result) {
             if (err) {
                 throw err;
