@@ -81,7 +81,7 @@ app.get("/wine/getById", async function (req, res) {
 });
 
 app.post("/supplier/add", async function (req, res) {
-    let result = await databaseutils.addSupplier(req.body.name, req.body.region, req.body.year, req.body.basePrice, req.body.sellPrice, req.body.supplierID);
+    let result = await databaseutils.addSupplier(req.body.name, req.body.vorname, req.body.region, req.body.adresse_id);
     console.log(result);
     res.send(result);
 });

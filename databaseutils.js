@@ -130,7 +130,7 @@ const searchWine = (query) =>
         });
     });
 
-const addSupplier = (name, vorname, region, address_id) =>
+const addSupplier = (name, vorname, region, addresse_id) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
         let sql = "INSERT INTO lieferant (name, vorname, region, adresse_id) " +
