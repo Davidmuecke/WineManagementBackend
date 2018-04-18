@@ -1,4 +1,5 @@
 {
+  "kundennummer": "id",
   "name": "name",
   "vorname": "vorname" ,
   "region": "region",

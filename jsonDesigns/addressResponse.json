@@ -1,7 +1,7 @@
 {
-  "street": "street 1",
-  "post": "70569",
-  "city": "city",
-  "country": "country"
+  "strasse": "street 1",
+  "plz": "70569",
+  "ort": "city",
+  "land": "country"
 }
 
