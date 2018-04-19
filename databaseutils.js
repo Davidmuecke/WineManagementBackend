@@ -7,47 +7,90 @@ var db = mysql.createConnection({
     database: "semsa_weinhandel"
 });
 
-
+/**
+ * Function adds wine to database
+ * @param name
+ * @param region
+ * @param location
+ * @param year
+ * @param deliveryDate
+ * @param amount
+ * @param basePrice
+ * @param sellPrice
+ * @param supplierID
+ * @returns {Promise<any>}
+ */
 const addWine = (name, region, location, year, deliveryDate, amount, basePrice, sellPrice, supplierID) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
-        let sql = "INSERT INTO artikel (bezeichnung, herkunft, lagerort, jahrgang, lieferdatum, menge, einkaufspreis, verkaufspreis, lieferant_id) " +
-            "VALUES ('" + name + "','" + region + "','" + location + "','" + year + "','" + deliveryDate + "','" + amount + "','" + basePrice + "','" + sellPrice + "','" + supplierID + "')";
+        let sql = "INSERT INTO artikel (bezeichnung, herkunft, lagerort, jahrgang, lieferdatum, menge, einkaufspreis, verkaufspreis, lieferant_id) "
+            + "VALUES ('" + name + "','" + region + "','" + location + "','" + year + "','" + deliveryDate + "','" + amount + "','" + basePrice
+            + "','" + sellPrice + "','" + supplierID + "')";
         db.query(sql, function (err, result) {
             if (err) {
                 throw err;
                 console.log(err);
-            } else console.log("Wine successfully added");
+            } else {
+                console.log("Wine successfully added");
+            }
         });
     });
 
+/**
+ * Function updates wine in database
+ * @param id
+ * @param name
+ * @param region
+ * @param location
+ * @param year
+ * @param deliveryDate
+ * @param amount
+ * @param basePrice
+ * @param sellPrice
+ * @param supplierID
+ * @returns {Promise<any>}
+ */
 const updateWine = (id, name, region, location, year, deliveryDate, amount, basePrice, sellPrice, supplierID) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
-        let sql = "UPDATE artikel SET bezeichnung = '" + name + "', herkunft = '" + region + "', lagerort = '" + location + "', jahrgang = '" + year + "', lieferdatum = '" + deliveryDate + "', menge = '" + amount + "', einkaufspreis = '" + basePrice + "', " +
-            "verkaufspreis = '" + sellPrice + "', lieferant_id = '" + supplierID + "' WHERE id = " + id;
+        let sql = "UPDATE artikel SET bezeichnung = '" + name + "', herkunft = '" + region + "', lagerort = '" + location + "', jahrgang = '" + year
+            + "', lieferdatum = '" + deliveryDate + "', menge = '" + amount + "', einkaufspreis = '" + basePrice + "', verkaufspreis = '"
+            + sellPrice + "', lieferant_id = '" + supplierID + "' WHERE id = " + id;
         db.query(sql, function (err, result) {
             if (err) {
                 throw err;
                 console.log(err);
-            } else console.log("Wine successfully updated");
+            } else {
+                console.log("Wine successfully updated");
+            }
             resolve(result);
         });
     });
 
+
+/**
+ * Function deletes wine from database
+ * @param id
+ * @returns {Promise<any>}
+ */
 const deleteWine = (id) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
         let sql = "DELETE FROM artikel WHERE id = " + id;
         db.query(sql, function (err, result) {
             if (err) {
-                //throw err;
                 resolve({result: false});
-            } else console.log("Wine successfully deleted");
+            } else {
+                console.log("Wine successfully deleted");
+            }
             resolve({result: true});
         });
     });
 
+/**
+ * Function queries wine from database
+ * @returns {Promise<any>}
+ */
 const getWines = () =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
@@ -77,6 +120,11 @@ const getWines = () =>
         });
     });
 
+/**
+ * Function queries wine from database by id
+ * @param id
+ * @returns {Promise<any>}
+ */
 const getWineById = (id) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
@@ -85,7 +133,9 @@ const getWineById = (id) =>
             if (err) {
                 throw err;
                 console.log(err);
-            } else console.log("Wine successfully returned");
+            } else {
+                console.log("Wine successfully returned");
+            }
             let jsonResult = {
                 "id": result[0].id,
                 "name": result[0].bezeichnung,
@@ -102,17 +152,26 @@ const getWineById = (id) =>
         });
     });
 
+
+/**
+ * Function searches wines in database by query
+ * @param query
+ * @returns {Promise<any>}
+ */
 const searchWine = (query) =>
     new Promise((resolve, reject) => {
         console.log(query);
         console.log("Connected!");
-        let sql = "SELECT * FROM artikel WHERE jahrgang = '" + query + "' OR menge = '" + query + "' OR bezeichnung = '" + query + "' OR lagerort = '" + query + "' OR herkunft = '" + query + "'";
+        let sql = "SELECT * FROM artikel WHERE jahrgang = '" + query + "' OR menge = '" + query + "' OR bezeichnung = '" + query
+            + "' OR lagerort = '" + query + "' OR herkunft = '" + query + "'";
         db.query(sql, function (err, result) {
             if (err) {
                 throw err;
                 console.log(err);
             }
-            if(query == null) resolve([]);
+            if (query == null) {
+                resolve([]);
+            }
             let jsonResultArray = [];
             for (let i = 0; i < result.length; i++) {
                 let jsonResult = {
@@ -133,6 +192,14 @@ const searchWine = (query) =>
         });
     });
 
+/**
+ * Function adds supplier to database
+ * @param name
+ * @param firstName
+ * @param region
+ * @param addressID
+ * @returns {Promise<any>}
+ */
 const addSupplier = (name, firstName, region, addressID) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
@@ -142,24 +209,43 @@ const addSupplier = (name, firstName, region, addressID) =>
             if (err) {
                 throw err;
                 console.log(err);
-            } else console.log("Supplier successfully added");
+            } else {
+                console.log("Supplier successfully added");
+            }
             resolve(result);
         });
     });
 
+/**
+ * Function updates wine in database
+ * @param id
+ * @param name
+ * @param firstName
+ * @param region
+ * @param addressID
+ * @returns {Promise<any>}
+ */
 const updateSupplier = (id, name, firstName, region, addressID) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
-        let sql = "UPDATE lieferant SET name = '" + name + "', vorname = '" + firstName + "', region = '" + region + "', adresse_id = '" + addressID + "' WHERE id = " + id;
+        let sql = "UPDATE lieferant SET name = '" + name + "', vorname = '" + firstName + "', region = '" + region + "', adresse_id = '"
+            + addressID + "' WHERE id = " + id;
         db.query(sql, function (err, result) {
             if (err) {
                 throw err;
                 console.log(err);
-            } else console.log("Supplier successfully updated");
+            } else {
+                console.log("Supplier successfully updated");
+            }
             resolve(result);
         });
     });
 
+/**
+ * Function deletes wine in database
+ * @param id
+ * @returns {Promise<any>}
+ */
 const deleteSupplier = (id) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
@@ -167,11 +253,17 @@ const deleteSupplier = (id) =>
         db.query(sql, function (err, result) {
             if (err) {
                 resolve({result: false});
-            } else console.log("Supplier successfully deleted");
+            } else {
+                console.log("Supplier successfully deleted");
+            }
             resolve({result: true});
         });
     });
 
+/**
+ * Function queries suppliers from database
+ * @returns {Promise<any>}
+ */
 const getSuppliers = () =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
@@ -180,7 +272,9 @@ const getSuppliers = () =>
             if (err) {
                 throw err;
                 console.log(err);
-            } else console.log("Supplier successfully printed");
+            } else {
+                console.log("Supplier successfully printed");
+            }
             let jsonResultArray = [];
             for (let i = 0; i < result.length; i++) {
                 let jsonResult = {
@@ -196,6 +290,12 @@ const getSuppliers = () =>
         });
     });
 
+
+/**
+ * Function queries supplier in database by id
+ * @param id
+ * @returns {Promise<any>}
+ */
 const getSupplierById = (id) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
@@ -204,7 +304,9 @@ const getSupplierById = (id) =>
             if (err) {
                 throw err;
                 console.log(err);
-            } else console.log("Supplier successfully returned");
+            } else {
+                console.log("Supplier successfully returned");
+            }
             let jsonResult = {
                 "id": result[0].id,
                 "name": result[0].name,
@@ -216,6 +318,11 @@ const getSupplierById = (id) =>
         });
     });
 
+/**
+ * Function searches suppliers in database by query
+ * @param query
+ * @returns {Promise<any>}
+ */
 const searchSupplier = (query) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
@@ -240,6 +347,14 @@ const searchSupplier = (query) =>
         });
     });
 
+/**
+ * Function adds address to database
+ * @param street
+ * @param post
+ * @param city
+ * @param country
+ * @returns {Promise<any>}
+ */
 const addAddress = (street, post, city, country) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
@@ -249,11 +364,22 @@ const addAddress = (street, post, city, country) =>
             if (err) {
                 throw err;
                 console.log(err);
-            } else console.log("Address successfully added");
+            } else {
+                console.log("Address successfully added");
+            }
             resolve(result);
         });
     });
 
+/**
+ * Function updates address in database
+ * @param id
+ * @param street
+ * @param post
+ * @param city
+ * @param country
+ * @returns {Promise<any>}
+ */
 const updateAddress = (id, street, post, city, country) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
@@ -263,11 +389,18 @@ const updateAddress = (id, street, post, city, country) =>
             if (err) {
                 throw err;
                 console.log(err);
-            } else console.log("Address successfully updated");
+            } else {
+                console.log("Address successfully updated");
+            }
             resolve(result);
         });
     });
 
+/**
+ * Function deletes address in database
+ * @param id
+ * @returns {Promise<any>}
+ */
 const deleteAddress = (id) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
@@ -276,11 +409,17 @@ const deleteAddress = (id) =>
             if (err) {
                 throw err;
                 console.log(err);
-            } else console.log("Address successfully deleted");
+            } else {
+                console.log("Address successfully deleted");
+            }
             resolve(result);
         });
     });
 
+/**
+ * Function queries addresses in database
+ * @returns {Promise<any>}
+ */
 const getAddresses = () =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
@@ -289,7 +428,9 @@ const getAddresses = () =>
             if (err) {
                 throw err;
                 console.log(err);
-            } else console.log("Adresses successfully printed");
+            } else {
+                console.log("Adresses successfully printed");
+            }
             let jsonResultArray = [];
             for (let i = 0; i < result.length; i++) {
                 let jsonResult = {
@@ -304,6 +445,11 @@ const getAddresses = () =>
         });
     });
 
+/**
+ * Function queries address in database by id
+ * @param id
+ * @returns {Promise<any>}
+ */
 const getAddressById = (id) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
@@ -313,7 +459,9 @@ const getAddressById = (id) =>
             if (err) {
                 throw err;
                 console.log(err);
-            } else console.log("Wine successfully returned");
+            } else {
+                console.log("Wine successfully returned");
+            }
             console.log(result);
             let jsonResult = {
                 "street": result[0].strasse,
@@ -325,6 +473,9 @@ const getAddressById = (id) =>
         });
     });
 
+/**
+ * Exported functions from module
+ */
 module.exports = {
     addWine,
     updateWine,
