@@ -41,10 +41,10 @@ const deleteWine = (id) =>
         let sql = "DELETE FROM artikel WHERE id = " + id;
         db.query(sql, function (err, result) {
             if (err) {
-                throw err;
-                console.log(err);
+                //throw err;
+                resolve({result: false});
             } else console.log("Wine successfully deleted");
-            resolve(result);
+            resolve({result: true});
         });
     });
 
@@ -166,10 +166,9 @@ const deleteSupplier = (id) =>
         let sql = "DELETE FROM artikel WHERE id = " + id;
         db.query(sql, function (err, result) {
             if (err) {
-                throw err;
-                console.log(err);
+                resolve({result: false});
             } else console.log("Supplier successfully deleted");
-            resolve(result);
+            resolve({result: true});
         });
     });
 
