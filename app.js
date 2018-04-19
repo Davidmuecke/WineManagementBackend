@@ -119,7 +119,7 @@ app.post("/supplier/update", async function (req, res) {
     res.send(result);
 });
 
-app.post("/supplier/delete", async function (req, res) {
+app.get("/supplier/delete", async function (req, res) {
     let result = await databaseutils.deleteSupplier(req.body.id);
     console.log(result);
     res.send(result);
