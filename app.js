@@ -25,14 +25,23 @@ app.get("/", function (req, res) {
     res.render('test');
 });
 
-app.get("/wine/search", function (req, res) {
-    let query = req.query.query;
-    console.log(query);
-    let tableResponse = {
-        "tableHeader": ["id0", "colName1", "colName2", "colNameX"],
-        "tableBody": [["id10", "colData11", "colData12", "colData1X"], ["id20", "colData21", "colData22", "colData2X"], ["idX0", "colDataX1", "colDataX2", "colDataXX"]]
+app.get("/wine/search", async function (req, res) {
+    let searchResult = await databaseutils.searchWine(req.query.query);
+    console.log(searchResult);
+    let result = {
+        "tableHeader": ["Nummer", "Name", "Jahrgang", "Bestand", "Lieferant", "Einkaufspreis", "Verkaufspreis", "Anbauort", "Lagerort"],
+        "tableBody": []
     };
-    res.send(tableResponse);
+    let tableBody = [];
+    for (let s in searchResult) {
+        let supplier = await databaseutils.getSupplierById(searchResult[s].lieferant_id);
+        console.log(supplier);
+        tableBody.push([searchResult[s].nummer, searchResult[s].name, searchResult[s].jahrgang, searchResult[s].bestand, supplier.name,
+            searchResult[s].einkaufspreis, searchResult[s].verkaufspreis, searchResult[s].anbauort, searchResult[s].lagerort]);
+    }
+
+    result.tableBody = tableBody;
+    res.send(result);
 });
 
 app.post("/wine/add", async function (req, res) {
@@ -77,6 +86,25 @@ app.get("/wine/get", async function (req, res) {
 app.get("/wine/getById", async function (req, res) {
     let result = await databaseutils.getWineById(req.query.id);
     console.log(result);
+    res.send(result);
+});
+
+
+app.get("/supplier/search", async function (req, res) {
+    let searchResult = await databaseutils.searchSupplier(req.query.query);
+    let result = {
+        "tableHeader": ["Kundennummer", "Name", "Region", "Land", "Straße", "Ort", "PLZ"],
+        "tableBody": []
+    };
+    let tableBody = [];
+    for (let s in searchResult) {
+        let address = await databaseutils.getAddressById(searchResult[s].adresse_id);
+        console.log(address);
+        tableBody.push([searchResult[s].kundennummer, searchResult[s].name, searchResult[s].region, address.land, address.strasse,
+            address.ort, address.plz]);
+    }
+
+    result.tableBody = tableBody;
     res.send(result);
 });
 

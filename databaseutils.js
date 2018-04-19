@@ -126,7 +126,7 @@ const searchWine = (query) =>
                 };
                 jsonResultArray.push(jsonResult);
             }
-            resolve(result);
+            resolve(jsonResultArray);
         });
     });
 
@@ -327,14 +327,16 @@ module.exports = {
     deleteWine,
     getWines,
     getWineById,
+    searchWine,
     addSupplier,
     updateSupplier,
     deleteSupplier,
     getSuppliers,
     getSupplierById,
+    searchSupplier,
     addAddress,
     updateAddress,
     deleteAddress,
     getAddresses,
-    getAddressById,
+    getAddressById
 };
