@@ -104,25 +104,28 @@ const getWineById = (id) =>
 
 const searchWine = (query) =>
     new Promise((resolve, reject) => {
+        console.log(query);
         console.log("Connected!");
-        let sql = "SELECT * FROM artikel WHERE jahrgang = '" + query + "' OR menge = '" + query + "' OR bezeichnung = '" + query + "' lagerort = '" + query + "' OR herkunft = '" + query + "'";
+        let sql = "SELECT * FROM artikel WHERE jahrgang = '" + query + "' OR menge = '" + query + "' OR bezeichnung = '" + query + "' OR lagerort = '" + query + "' OR herkunft = '" + query + "'";
         db.query(sql, function (err, result) {
             if (err) {
                 throw err;
                 console.log(err);
             }
+            if(query == null) resolve([]);
             let jsonResultArray = [];
             for (let i = 0; i < result.length; i++) {
                 let jsonResult = {
+                    "nummer": result[i].id,
                     "name": result[i].bezeichnung,
-                    "region": result[i].herkunft,
-                    "location": result[i].lagerort,
-                    "year": result[i].jahrgang,
-                    "deliveryDate": result[i].lieferdatum,
-                    "amount": result[i].menge,
-                    "basePrice": result[i].einkaufspreis,
-                    "sellPrice": result[i].verkaufspreis,
-                    "supplierID": result[i].lieferant_id
+                    "jahrgang": result[i].jahrgang,
+                    "bestand": result[i].menge,
+                    "lieferant_id": result[i].lieferant_id,
+                    "einkaufspreis": result[i].einkaufspreis,
+                    "verkaufspreis": result[i].verkaufspreis,
+                    "anbauort": result[i].herkunft,
+                    "lagerort": result[i].lagerort,
+                    "lieferdatum": result[i].lieferdatum
                 };
                 jsonResultArray.push(jsonResult);
             }
