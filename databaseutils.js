@@ -236,7 +236,7 @@ const searchSupplier = (query) =>
                 };
                 jsonResultArray.push(jsonResult);
             }
-            resolve(result);
+            resolve(jsonResultArray);
         });
     });
 

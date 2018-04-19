@@ -99,7 +99,6 @@ app.get("/supplier/search", async function (req, res) {
     let tableBody = [];
     for (let s in searchResult) {
         let address = await databaseutils.getAddressById(searchResult[s].adresse_id);
-        console.log(address);
         tableBody.push([searchResult[s].kundennummer, searchResult[s].name, searchResult[s].region, address.land, address.strasse,
             address.ort, address.plz]);
     }
