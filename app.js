@@ -160,7 +160,7 @@ app.get("/supplier/get", async function (req, res) {
     console.log(supplierResult);
     let tableBody = [];
     for (let s in supplierResult) {
-        let address = await databaseutils.getAddressById(supplierResult[s].adresse_id);
+        let address = await databaseutils.getAddressById(supplierResult[s].addressID);
         console.log(address);
         tableBody.push([supplierResult[s].id, supplierResult[s].name, supplierResult[s].region, address.country, address.street,
             address.city, address.post]);
