@@ -132,6 +132,7 @@ app.get("/supplier/get", async function (req, res) {
         "tableHeader": ["Kundennummer", "Name", "Region", "Land", "Straße", "Ort", "PLZ"],
         "tableBody": []
     };
+    console.log(supplierResult);
     let tableBody = [];
     for (let s in supplierResult) {
         let address = await databaseutils.getAddressById(supplierResult[s].adresse_id);

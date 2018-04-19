@@ -133,11 +133,11 @@ const searchWine = (query) =>
         });
     });
 
-const addSupplier = (name, vorname, region, addresse_id) =>
+const addSupplier = (name, vorname, region, adresse_id) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
         let sql = "INSERT INTO lieferant (name, vorname, region, adresse_id) " +
-            "VALUES ('" + name + "','" + vorname + "','" + region + "','" + addresse_id + "')";
+            "VALUES ('" + name + "','" + vorname + "','" + region + "','" + adresse_id + "')";
         db.query(sql, function (err, result) {
             if (err) {
                 throw err;
@@ -188,7 +188,7 @@ const getSuppliers = () =>
                     "name": result[i].name,
                     "vorname": result[i].vorname,
                     "region": result[i].region,
-                    "addresse_id": result[i].adresse_id
+                    "adresse_id": result[i].adresse_id
                 };
                 jsonResultArray.push(jsonResult);
             }
@@ -210,7 +210,7 @@ const getSupplierById = (id) =>
                 "name": result[0].name,
                 "vorname": result[0].vorname,
                 "region": result[0].region,
-                "addresse_id": result[0].adresse_id
+                "adresse_id": result[0].adresse_id
             };
             resolve(jsonResult);
         });
@@ -232,7 +232,7 @@ const searchSupplier = (query) =>
                     "name": result[r].name,
                     "vorname": result[r].vorname,
                     "region": result[r].region,
-                    "addresse_id": result[r].adresse_id
+                    "adresse_id": result[r].adresse_id
                 };
                 jsonResultArray.push(jsonResult);
             }
@@ -307,12 +307,14 @@ const getAddresses = () =>
 const getAddressById = (id) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
-        let sql = "SELECT * FROM adresse WHERE id = " + id;
+        console.log(id);
+        let sql = "SELECT * FROM adresse WHERE id = '" + id + "'";
         db.query(sql, function (err, result) {
             if (err) {
                 throw err;
                 console.log(err);
             } else console.log("Wine successfully returned");
+            console.log(result);
             let jsonResult = {
                 "strasse": result[0].strasse,
                 "plz": result[0].plz,
