@@ -60,16 +60,16 @@ const getWines = () =>
             let jsonResultArray = [];
             for (let i = 0; i < result.length; i++) {
                 let jsonResult = {
-                    "nummer": result[i].id,
+                    "id": result[i].id,
                     "name": result[i].bezeichnung,
-                    "jahrgang": result[i].jahrgang,
-                    "bestand": result[i].menge,
-                    "lieferant_id": result[i].lieferant_id,
-                    "einkaufspreis": result[i].einkaufspreis,
-                    "verkaufspreis": result[i].verkaufspreis,
-                    "anbauort": result[i].herkunft,
-                    "lagerort": result[i].lagerort,
-                    "lieferdatum": result[i].lieferdatum
+                    "year": result[i].jahrgang,
+                    "amount": result[i].menge,
+                    "supplierID": result[i].lieferant_id,
+                    "basePrice": result[i].einkaufspreis,
+                    "sellPrice": result[i].verkaufspreis,
+                    "region": result[i].herkunft,
+                    "location": result[i].lagerort,
+                    "deliveryDate": result[i].lieferdatum
                 };
                 jsonResultArray.push(jsonResult);
             }
@@ -87,16 +87,16 @@ const getWineById = (id) =>
                 console.log(err);
             } else console.log("Wine successfully returned");
             let jsonResult = {
-                "nummer": result[0].id,
+                "id": result[0].id,
                 "name": result[0].bezeichnung,
-                "jahrgang": result[0].jahrgang,
-                "bestand": result[0].menge,
-                "lieferant_id": result[0].lieferant_id,
-                "einkaufspreis": result[0].einkaufspreis,
-                "verkaufspreis": result[0].verkaufspreis,
-                "anbauort": result[0].herkunft,
-                "lagerort": result[0].lagerort,
-                "lieferdatum": result[0].lieferdatum
+                "year": result[0].jahrgang,
+                "amount": result[0].menge,
+                "supplierID": result[0].lieferant_id,
+                "basePrice": result[0].einkaufspreis,
+                "sellPrice": result[0].verkaufspreis,
+                "region": result[0].herkunft,
+                "location": result[0].lagerort,
+                "deliveryDate": result[0].lieferdatum
             }
             resolve(jsonResult);
         });
@@ -116,16 +116,16 @@ const searchWine = (query) =>
             let jsonResultArray = [];
             for (let i = 0; i < result.length; i++) {
                 let jsonResult = {
-                    "nummer": result[i].id,
+                    "id": result[i].id,
                     "name": result[i].bezeichnung,
-                    "jahrgang": result[i].jahrgang,
-                    "bestand": result[i].menge,
-                    "lieferant_id": result[i].lieferant_id,
-                    "einkaufspreis": result[i].einkaufspreis,
-                    "verkaufspreis": result[i].verkaufspreis,
-                    "anbauort": result[i].herkunft,
-                    "lagerort": result[i].lagerort,
-                    "lieferdatum": result[i].lieferdatum
+                    "year": result[i].jahrgang,
+                    "amount": result[i].menge,
+                    "supplierID": result[i].lieferant_id,
+                    "basePrice": result[i].einkaufspreis,
+                    "sellPrice": result[i].verkaufspreis,
+                    "region": result[i].herkunft,
+                    "location": result[i].lagerort,
+                    "deliveryDate": result[i].lieferdatum
                 };
                 jsonResultArray.push(jsonResult);
             }
@@ -133,11 +133,11 @@ const searchWine = (query) =>
         });
     });
 
-const addSupplier = (name, vorname, region, adresse_id) =>
+const addSupplier = (name, firstName, region, addressID) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
         let sql = "INSERT INTO lieferant (name, vorname, region, adresse_id) " +
-            "VALUES ('" + name + "','" + vorname + "','" + region + "','" + adresse_id + "')";
+            "VALUES ('" + name + "','" + firstName + "','" + region + "','" + addressID + "')";
         db.query(sql, function (err, result) {
             if (err) {
                 throw err;
@@ -147,10 +147,10 @@ const addSupplier = (name, vorname, region, adresse_id) =>
         });
     });
 
-const updateSupplier = (id, name, vorname, region, address_id) =>
+const updateSupplier = (id, name, firstName, region, addressID) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
-        let sql = "UPDATE lieferant SET name = '" + name + "', vorname = '" + vorname + "', region = '" + region + "', adresse_id = '" + address_id + "' WHERE id = " + id;
+        let sql = "UPDATE lieferant SET name = '" + name + "', vorname = '" + firstName + "', region = '" + region + "', adresse_id = '" + addressID + "' WHERE id = " + id;
         db.query(sql, function (err, result) {
             if (err) {
                 throw err;
@@ -184,11 +184,11 @@ const getSuppliers = () =>
             let jsonResultArray = [];
             for (let i = 0; i < result.length; i++) {
                 let jsonResult = {
-                    "kundennummer": result[i].id,
+                    "id": result[i].id,
                     "name": result[i].name,
-                    "vorname": result[i].vorname,
+                    "firstName": result[i].vorname,
                     "region": result[i].region,
-                    "adresse_id": result[i].adresse_id
+                    "addressID": result[i].adresse_id
                 };
                 jsonResultArray.push(jsonResult);
             }
@@ -206,11 +206,11 @@ const getSupplierById = (id) =>
                 console.log(err);
             } else console.log("Supplier successfully returned");
             let jsonResult = {
-                "kundennummer": result[0].id,
+                "id": result[0].id,
                 "name": result[0].name,
-                "vorname": result[0].vorname,
+                "firstName": result[0].vorname,
                 "region": result[0].region,
-                "adresse_id": result[0].adresse_id
+                "addressID": result[0].adresse_id
             };
             resolve(jsonResult);
         });
@@ -228,11 +228,11 @@ const searchSupplier = (query) =>
             let jsonResultArray = [];
             for (let r in result) {
                 let jsonResult = {
-                    "kundennummer": result[r].id,
+                    "id": result[r].id,
                     "name": result[r].name,
-                    "vorname": result[r].vorname,
+                    "firstName": result[r].vorname,
                     "region": result[r].region,
-                    "adresse_id": result[r].adresse_id
+                    "addressID": result[r].adresse_id
                 };
                 jsonResultArray.push(jsonResult);
             }
@@ -293,10 +293,10 @@ const getAddresses = () =>
             let jsonResultArray = [];
             for (let i = 0; i < result.length; i++) {
                 let jsonResult = {
-                    "strasse": result[i].strasse,
-                    "plz": result[i].plz,
-                    "ort": result[i].ort,
-                    "land": result[i].land
+                    "street": result[i].strasse,
+                    "post": result[i].plz,
+                    "city": result[i].ort,
+                    "country": result[i].land
                 };
                 jsonResultArray.push(jsonResult);
             }
@@ -316,10 +316,10 @@ const getAddressById = (id) =>
             } else console.log("Wine successfully returned");
             console.log(result);
             let jsonResult = {
-                "strasse": result[0].strasse,
-                "plz": result[0].plz,
-                "ort": result[0].ort,
-                "land": result[0].land
+                "street": result[0].strasse,
+                "post": result[0].plz,
+                "city": result[0].ort,
+                "country": result[0].land
             }
             resolve(jsonResult);
         });

@@ -34,10 +34,10 @@ app.get("/wine/search", async function (req, res) {
     };
     let tableBody = [];
     for (let s in searchResult) {
-        let supplier = await databaseutils.getSupplierById(searchResult[s].lieferant_id);
+        let supplier = await databaseutils.getSupplierById(searchResult[s].supplierID);
         console.log(supplier);
-        tableBody.push([searchResult[s].nummer, searchResult[s].name, searchResult[s].jahrgang, searchResult[s].bestand, supplier.name,
-            searchResult[s].einkaufspreis, searchResult[s].verkaufspreis, searchResult[s].anbauort, searchResult[s].lagerort]);
+        tableBody.push([searchResult[s].id, searchResult[s].name, searchResult[s].year, searchResult[s].amount, supplier.name,
+            searchResult[s].basePrice, searchResult[s].sellPrice, searchResult[s].region, searchResult[s].location]);
     }
 
     result.tableBody = tableBody;
@@ -73,10 +73,10 @@ app.get("/wine/get", async function (req, res) {
     };
     let tableBody = [];
     for (let w in wineResult) {
-        let supplier = await databaseutils.getSupplierById(wineResult[w].lieferant_id);
+        let supplier = await databaseutils.getSupplierById(wineResult[w].supplierID);
         console.log(supplier);
-        tableBody.push([wineResult[w].nummer, wineResult[w].name, wineResult[w].jahrgang, wineResult[w].bestand, supplier.name,
-                        wineResult[w].einkaufspreis, wineResult[w].verkaufspreis, wineResult[w].anbauort, wineResult[w].lagerort]);
+        tableBody.push([wineResult[w].id, wineResult[w].name, wineResult[w].year, wineResult[w].amount, supplier.name,
+            wineResult[w].basePrice, wineResult[w].sellPrice, wineResult[w].region, wineResult[w].location]);
     }
 
     result.tableBody = tableBody;
@@ -98,9 +98,9 @@ app.get("/supplier/search", async function (req, res) {
     };
     let tableBody = [];
     for (let s in searchResult) {
-        let address = await databaseutils.getAddressById(searchResult[s].adresse_id);
-        tableBody.push([searchResult[s].kundennummer, searchResult[s].name, searchResult[s].region, address.land, address.strasse,
-            address.ort, address.plz]);
+        let address = await databaseutils.getAddressById(searchResult[s].addressID);
+        tableBody.push([searchResult[s].id, searchResult[s].name, searchResult[s].region, address.country, address.street,
+            address.city, address.post]);
     }
 
     result.tableBody = tableBody;
@@ -114,7 +114,7 @@ app.post("/supplier/add", async function (req, res) {
 });
 
 app.post("/supplier/update", async function (req, res) {
-    let result = await databaseutils.updateSupplier(req.body.id, req.body.name, req.body.region, req.body.year, req.body.basePrice, req.body.sellPrice, req.body.supplierID);
+    let result = await databaseutils.updateSupplier(req.body.id, req.body.name, req.body.firstName, req.body.region, req.body.addressID);
     console.log(result);
     res.send(result);
 });
@@ -136,8 +136,8 @@ app.get("/supplier/get", async function (req, res) {
     for (let s in supplierResult) {
         let address = await databaseutils.getAddressById(supplierResult[s].adresse_id);
         console.log(address);
-        tableBody.push([supplierResult[s].kundennummer, supplierResult[s].name, supplierResult[s].region, address.land, address.strasse,
-            address.ort, address.plz]);
+        tableBody.push([supplierResult[s].id, supplierResult[s].name, supplierResult[s].region, address.country, address.street,
+            address.city, address.post]);
     }
 
     result.tableBody = tableBody;
