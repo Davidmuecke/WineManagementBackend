@@ -143,7 +143,7 @@ app.post("/supplier/update", async function (req, res) {
  * Get route to delete supplier
  */
 app.get("/supplier/delete", async function (req, res) {
-    let result = await databaseutils.deleteSupplier(req.body.id);
+    let result = await databaseutils.deleteSupplier(req.query.id);
     console.log(result);
     res.send(result);
 });

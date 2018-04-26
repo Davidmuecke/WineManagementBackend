@@ -249,9 +249,10 @@ const updateSupplier = (id, name, firstName, region, addressID) =>
 const deleteSupplier = (id) =>
     new Promise((resolve, reject) => {
         console.log("Connected!");
-        let sql = "DELETE FROM artikel WHERE id = " + id;
+        let sql = "DELETE FROM lieferant WHERE id = " + id;
         db.query(sql, function (err, result) {
             if (err) {
+                console.log(err);
                 resolve({result: false});
             } else {
                 console.log("Supplier successfully deleted");
