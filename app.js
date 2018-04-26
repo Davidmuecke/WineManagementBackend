@@ -134,7 +134,7 @@ app.post("/supplier/add", async function (req, res) {
  * Post route to update supplier
  */
 app.post("/supplier/update", async function (req, res) {
-    let result = await databaseutils.updateSupplier(req.body.id, req.body.name, req.body.firstName, req.body.region, req.body.addressID);
+    let result = await databaseutils.updateSupplier(req.body.id, req.body.name, req.body.firstName, req.body.region, req.body.adresse_id);
     console.log(result);
     res.send(result);
 });
